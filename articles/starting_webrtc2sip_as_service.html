@@ -1,0 +1,244 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-4540802364968823",
+          enable_page_level_ads: true
+     });
+</script>
+<title>Starting WebRTC2SIP as a service without screen or console</title>
+<meta name="Author" content="Marcelo Gornstein"/>
+<meta name="Keywords" content="This article explains how to start webrtc2sip as a service without using screen so it can be monitored. This is a patch to add an argument to webrtc2sip to optionally disable the console."/>
+<meta name="description" content="This article explains how to start webrtc2sip as a service without using screen so it can be monitored. This is a patch to add an argument to webrtc2sip to optionally disable the console."/>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" href="../images/favicon.ico" title="favicon" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="all" />
+<link href='../dphighlighter/SyntaxHighlighter.css' rel='stylesheet' type='text/css' />
+<!--[if IE]>
+<link type="text/css" rel="stylesheet" media="screen" href="../css/fix-ie.css" />
+<![endif]-->
+<!--[if IE 6]>
+<script type="text/javascript" src="../js/fix-png.js"></script>
+<![endif]-->
+<script type="text/javascript" src="http://apis.google.com/js/plusone.js"></script>
+<script type="text/javascript" src="../js/lib/jquery-core.js"></script>
+<script type="text/javascript" src="../js/main.js"></script>
+</head>
+<body>
+<div id="wrapper">
+  <div id="top">
+    <!-- <a class="logo" href="index.html">Marcelo G</a>-->
+    <ul id="nav">
+      <li><a href="../index.html"><span>Home</span></a></li>
+      <li class="active"><a href="articles.html"><span>Articles</span></a></li>
+      <li><a href="../software.html"><span>Software</span></a></li>
+      <li><a href="mailto:marcelog@gmail.com"><span>Contact</span></a></li>
+    </ul>
+  </div>
+  <div class="header">
+  	<div class="line">
+      <h1>Articles</h1>
+      <div class="social-network">
+       <a href="mailto:marcelog@gmail.com" class="icon-email" title="Email">Email</a>
+       <g:plusone></g:plusone>
+      </div>
+   	</div>
+    <div class="breadcrumb">You are here &nbsp;&raquo;&nbsp; <a href="../index.html">Home Page</a>  &nbsp;&raquo;&nbsp;  <a href="articles.html">Articles</a>  &nbsp;&raquo;&nbsp;  Starting WebRTC2SIP as a service without screen or console</div>
+  </div>
+  <div class="main-outer">
+  	<div class="main-inner">
+    	<div class="main">
+      	<div class="line">
+          <div id="content">
+            <div class="mod simple article-detail-style">
+              <span class="top"><span class="tl"></span><span class="tr"></span></span>
+              <div class="inner set-height-1">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- blog2 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4540802364968823"
+     data-ad-slot="2769853059"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+                <h2>Starting WebRTC2SIP as a service without screen or console.</h2>
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="mgornstein" data-size="large" data-related="mgornstein">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                <div class="hr-1"><hr /></div>
+  <H3><u>Making webrtc2sip a service</u></H3>
+<p>
+<b>NOTE</b>: If you are trying or want to get rid of webrtc2sip and use a plain asterisk installation, see <a href="webrtc_with_asterisk_without_webrtc2sip.html">"<b>WebRTC with Asterisk and Amazon AWS</b>"</a>.
+</p>
+<p>
+<a href="http://webrtc2sip.org/"><b>Webrtc2sip</b></a> is a much needed tool created by the <a href="http://doubango.org/">Doubango</a> guys, to enable the use of
+ <a href="https://en.wikipedia.org/wiki/Session_Initiation_Protocol">SIP</a> as the signaling protocol in a <a href="http://www.webrtc.org/"><b>webrtc</b></a>
+ application, used with <a href="http://www.asterisk.org"><b>Asterisk</b></a> and/or <a href="http://www.freeswitch.org"><b>FreeSWITCH</b></a>
+mostly. If you want to know how to actually compile and install it, please refer to the article titled <a href="installing_webrtc2sip_in_amazon_linux_in_aws.html">Compiling and Installing WebRTC2SIP</a>.
+</p>
+<p>
+Unfortunately this handy tool can't be <b>started as a service</b> as it is, since it will always start and read from
+standard input for commands (as of today, the only command available seems to be <b>quit</b>).
+</p>
+<p>
+A lot of folks have resorted <a href="https://code.google.com/p/webrtc2sip/issues/detail?id=80#c2"><b>to use screen to start webrtc2sip as a service</b></a>. This
+solution might work for some people, but it is a kludgy way to get around this.
+</p>
+<p>
+So I've made <a href="https://gist.github.com/marcelog/47ef364b43c67f9f359d">this simple <b>patch available</b> as a gist</a> that adds a <b>new option</b> to
+<b>webrtc2sip</b> that can be used at startup: <b>--without-console</b>.
+</p>
+<p>
+To apply the patch just download the gist to your local copy of the <a href="https://webrtc2sip.googlecode.com/svn/trunk/"><b>webrtc2sip svn repo</b></a>:
+</p>
+<script src="https://gist.github.com/marcelog/d9c77395426f7f577b68d2f1df846f4f.js"></script>
+<p>
+Then continue building as usual:
+</p>
+<script src="https://gist.github.com/marcelog/71abcab8dc37bab64329e5f457cf86bf.js"></script>
+<p>
+After that you can start webrtc2sip normally with console:
+<script src="https://gist.github.com/marcelog/b011ca77262c470374486d590ae47ab9.js"></script>
+<p>
+Or (by specifying the new option), without a console, like:
+</p>
+<script
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- blog1 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4540802364968823"
+     data-ad-slot="6142121850"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+<h3>Using webrtc2sip from within daemontools</h3>
+<p>
+If you use <a href="http://cr.yp.to/daemontools.html/">daemontools</a> (you can find how to install it
+in this article titled <a href="install_daemon_tools_centos_amazon_linux.html">"Installing DaemonTools in Amazon Linux (or CentOS like OS)"</a>), these
+sample scripts will help you run webrtc2sip when the system boots.
+</p>
+<p>
+Create a user for it, with:
+</p>
+<script src="https://gist.github.com/marcelog/458e804614ee72b3708e13e1c88d3a60.js"></script>
+<p>
+Then create the following files with the following content for each one:
+</p>
+<h3>/etc/service/webrtc2sip/log/run (mode 0700)</h3>
+<script src="https://gist.github.com/marcelog/5b72654e2708a792b90f8410789226ad.js"></script>
+<h3>/etc/service/webrtc2sip/run (mode 0700)</h3>
+<script src="https://gist.github.com/marcelog/c8fc2c271a05174b37d999cf2d422983.js"></script>
+<h3>Create the directory /etc/service/webrtc2sip/env (mode 0700)</h3>
+<p>
+No contents needed for this one.
+</p>
+<p>
+Enjoy!
+</p>
+              </div>
+            </div>
+            <div class="mod view-more">
+              <div class="inner">
+                <a href="articles.html">Read Other Articles</a>
+              </div>
+              <span class="bottom"><span class="bl"></span><span class="br"></span></span>
+            </div>
+          </div>
+          <div id="sidebar" class="highlight articles-style original">
+            <div class="mod simple">
+              <span class="top"><span class="tl"></span><span class="tr"></span></span>
+              <div class="inner set-height-1">
+<p>
+If you liked this or other articles (and feel generous), you can make a donation:
+</p>
+<p>
+<a href='https://pledgie.com/campaigns/30947'><img alt='Click here to lend your support to: General and make a donation at pledgie.com !' src='https://pledgie.com/campaigns/30947.png?skin_name=chrome' border='0' ></a>
+</p>
+                <div class="google-ads">
+                    <script type="text/javascript">
+                    google_ad_client = "ca-pub-4540802364968823";
+                    /* 9 */
+                    google_ad_slot = "8617829895";
+                    google_ad_width = 250;
+                    google_ad_height = 250;
+                    //-->
+                    </script>
+                    <script type="text/javascript"
+                    src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+                    </script>
+                </div>
+                <h2>Related Articles</h2>
+                <div class="hr-1"><hr /></div>
+                <ul class="quick-list">
+                  <li><a href="haproxy_validate_ssl_client_certificates_in_application.html">Validate client SSL certificates in your application with HaProxy</a></li>
+                  <li><a href="haproxy_acl_backend_ssl_sni.html">Setup multiple backends in HaProxy with ACL, one SSL certificate, and SNI</a></li>
+                  <li><a href="android_emulator_linux_virtual_webcam_video_device.html">Virtual webcam as phone camera in Android Emulator in Linux</a></li>
+                  <li><a href="android_emulator_black_screen_vnc_gpu_mesa_sdl.html">Android Emulator in Linux with VNC and without GPU support</a></li>
+                  <li><a href="android_emulator_32bit_error_in_64bit_system.html">Solution for "ERROR: 32-bit Linux Android emulator binaries are DEPRECATED"</a></li>
+                  <li><a href="android_emulator_daemontools.html">Running the Android Emulator as System Services with Daemontools</a></li>
+                  <li><a href="mac_newline_to_unix_eol.html">Convert MAC EOL to Unix</a></li>
+                  <li><a href="nginx_compile_with_external_openssl.html">How to compile NGINX with external OpenSSL libraries and custom linker options</a></li>
+                  <li><a href="aws_cloudwatch_monitor_lambda_alerts.html">Using CloudWatch to Monitor your AWS Lambda and send Alerts on Errors</a></li>
+                  <li><a href="aws_lambda_check_website_http_online.html">Using AWS Lambda to check if your website is online</a></li>
+                  <li><a href="mysql_events_expiring_sessions.html">Expirable user sessions with MySQL events</a></li>
+                  <li><a href="aws_sqs_lambda_sound_file_transcoding.html">Transcoding Audio Files with AWS Lambda and SQS without Elastic Transcoder</a></li>
+                  <li><a href="static_sox_transcoding_lambda_mp3.html">How to create a static SOX executable to invoke it in AWS Lambda</a></li>
+                  <li><a href="asterisk_json_curl_dialplan.html">How to use Curl and Json from the Asterisk Dialplan to control call flow</a></li>
+                  <li><a href="asterisk_dial_while_incoming_call_in_queue.html">Selectively Receiving incoming calls from Asterisk Queues while dialing out</a></li>
+                  <li><a href="asterisk_queue_wrapup_time_agents_time_after_call_ends.html">Giving your Call Center Agents or Queue Members some extra time after a call finishes with Asterisk Queues</a></li>
+                  <li><a href="monitor_sip_trunks_success_calls.html">Monitoring SIP trunks for availability by issuing test calls with SIPp</a></li>
+                  <li><a href="fop2_set_dnd_status_asterisk_db_event_reload.html">Setting DND (Do Not Disturb) in FOP2 Programmatically</a></li>
+                  <li><a href="webrtc_with_asterisk_without_webrtc2sip.html">WebRTC with Asterisk and Amazon AWS</a></li>
+                  <li><a href="restrict_block_acl_ip_address_haproxy_tcp.html">Using ACL by IP Address in HaProxy TCP Mode</a></li>
+                  <li><a href="simple_daily_mysql_backup_to_s3.html">Automatized daily mysql backups to S3 buckets</a></li>
+                  <li><a href="installing_webrtc2sip_in_amazon_linux_in_aws.html">Compiling and Installing WebRTC2SIP</a></li>
+                  <li><a href="install_daemon_tools_centos_amazon_linux.html">Installing DaemonTools in Amazon Linux (or CentOS like OS)</a></li>
+                  <li><a href="cross_freebsd_compiler_in_linux.html">Generating A Cross Compiler For Freebsd In Linux</a></li>
+                  <li><a href="configure_nginx_php_5.3_5.2_fastcgi.html">How to setup nginx to work with FastCGI and PHP 5.2 and PHP 5.3</a></li>
+                  <li><a href="configure_postfix_forward_all_email_smtp_gateway.html">Configuring postfix to forward all email to a smtp gateway</a></li>
+                  <li><a href="configure_postfix_forward_email_regex_subject_transport_relay.html">Different relays in postfix based on regular expressions</a></li>
+                </ul>
+              </div>
+              <span class="bottom"><span class="bl"></span><span class="br"></span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="footer">
+  	<!-- <p>&copy; 2010 Marcelo G. All Rights Reserved. Website design by <a href="http://Digitallabs.tv" target="_blank">Digitallabs.tv</a></p> -->
+    <address>Email: <a href="mailto:marcelog@gmail.com">marcelog@gmail.com</a></address>
+  </div>
+</div>
+
+<!-- config SyntaxHighlighter -->
+<script src='../dphighlighter/shCore.js' type='text/javascript'></script>
+<script src='../dphighlighter/shBrushPhp.js' type='text/javascript'></script>
+<script src='../dphighlighter/shBrushXml.js' type='text/javascript'></script>
+<script src='../dphighlighter/shBrushJScript.js' type='text/javascript'></script>
+<script src='../dphighlighter/shBrushCss.js' type='text/javascript'></script>
+<script language="javascript">
+    dp.SyntaxHighlighter.ClipboardSwf = '../dphighlighter/clipboard.swf';
+    dp.SyntaxHighlighter.HighlightAll('code');
+</script>
+  <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-21070993-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,263 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-4540802364968823",
+          enable_page_level_ads: true
+     });
+</script>
+  <title>Monitoring SIP trunks for availability by issuing test calls with SIPp</title>
+<meta name="Author" content="Marcelo Gornstein"/>
+<meta name="Keywords" content="asterisk pbx freeswitch test or monitor sip trunks for availability by using sipp send alerts offline"/>
+<meta name="description" content="This article shows an interesting way for setting up a scenario xml file to test your PBXs either Asterisk, FreeSWITCH or any other kind of SIP trunk for availability and uptime"/>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" href="../images/favicon.ico" title="favicon" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="all" />
+<link href='../dphighlighter/SyntaxHighlighter.css' rel='stylesheet' type='text/css' />
+<!--[if IE]>
+<link type="text/css" rel="stylesheet" media="screen" href="../css/fix-ie.css" />
+<![endif]-->
+<!--[if IE 6]>
+<script type="text/javascript" src="../js/fix-png.js"></script>
+<![endif]-->
+<script type="text/javascript" src="http://apis.google.com/js/plusone.js"></script>
+<script type="text/javascript" src="../js/lib/jquery-core.js"></script>
+<script type="text/javascript" src="../js/main.js"></script>
+</head>
+<body>
+<div id="wrapper">
+  <div id="top">
+    <!-- <a class="logo" href="index.html">Marcelo G</a>-->
+    <ul id="nav">
+      <li><a href="../index.html"><span>Home</span></a></li>
+      <li class="active"><a href="articles.html"><span>Articles</span></a></li>
+      <li><a href="../software.html"><span>Software</span></a></li>
+      <li><a href="mailto:marcelog@gmail.com"><span>Contact</span></a></li>
+    </ul>
+  </div>
+  <div class="header">
+    <div class="line">
+      <h1>Articles</h1>
+      <div class="social-network">
+       <a href="mailto:marcelog@gmail.com" class="icon-email" title="Email">Email</a>
+       <g:plusone></g:plusone>
+      </div>
+     </div>
+    <div class="breadcrumb">You are here &nbsp;&raquo;&nbsp; <a href="../index.html">Home Page</a>  &nbsp;&raquo;&nbsp;  <a href="articles.html">Articles</a>  &nbsp;&raquo;&nbsp;  Monitoring SIP trunks for availability by issuing test calls with SIPp</div>
+  </div>
+  <div class="main-outer">
+    <div class="main-inner">
+      <div class="main">
+        <div class="line">
+          <div id="content">
+            <div class="mod simple article-detail-style">
+              <span class="top"><span class="tl"></span><span class="tr"></span></span>
+              <div class="inner set-height-1">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- blog2 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4540802364968823"
+     data-ad-slot="2769853059"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+                <h2>Monitoring SIP trunks for availability by issuing test calls with SIPp</h2>
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="mgornstein" data-size="large" data-related="mgornstein">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                <div class="hr-1"><hr /></div>
+<h3>Motivation for periodically checking your SIP trunks or PBXs for inbound calls</h3>
+<p>
+<a href="http://sipp.sourceforge.net/"><b>SIPp</b></a> is an awesome tool to do load testing for your SIP infrastructure or applications, it uses
+a simple XML file to setup a test scenario and then you can pick up the results in different ways. And we can also use it to <b>test the availability of
+our own VoIP infrastructure</b>.
+</p>
+<p>
+It may happen that your business relies on an <b>Asterisk PBX</b> or <b>FreeSWITCH</b> system to take calls (for example inbound calls for
+customer support), and it may also happen that these servers might be temporarily down for some reason (perhaps
+a misconfiguration ot any other temporal errors). This is emabarrasing when the customer wants to reach out to you by phone and it's not possible.
+</p>
+<p>
+But VoIP sometimes fail, so it is really useful that we can check that calls to one or more of these
+telephone numbers (or <a href="https://en.wikipedia.org/wiki/Direct_inward_dial">DIDs</a>) actually work as they should, and in case they don't take
+some action before the customers actually note it.
+</p>
+<p>
+So the general idea is to use a real VoIP provider to periodically issue a call to a public telephone number and check that the
+call has been answered by for example an <a href="https://en.wikipedia.org/wiki/Automated_attendant">Automated Attendant</a> playing a menu
+to the customer.
+</p>
+<p>
+In this article we are going to see how we can use SIPp for such a task, essentially to monitor our PBXs or SIP trunks (it doesn't matter if we use Asterisk PBX, FreeSWITCH, or any other
+kind of SIP UAS).
+</p>
+<h3>Running the test to issue one call to check your SIP trunk for availability</h3>
+<p>
+  We are going to use the following shell script to run SIPp with our scenario file:
+</p>
+<script src="https://gist.github.com/marcelog/1753e2885bb55f71b0d9648d7f71c9b5.js"></script>
+<p>
+The script takes the following arguments (in order):
+</p>
+<ul>
+  <li><b>Scenario File</b>: Full path to the XML file with our scenario.</li>
+  <li><b>VoIP Gateway</b>: IP address of where we should send this call to. This should be a real VoIP provider that is connected to the
+    <a href="https://en.wikipedia.org/wiki/Public_switched_telephone_network">PSTN (the Public switched telephone network)</a> so the call
+    can actually make progress like it would in a real use case when a customer is calling.</li>
+  <li><b>From</b>: A valid DID, or telephone number as required by the VoIP Gateway above. This should be seen in our calls as the Caller ID.</li>
+  <li><b>To</b>: The DID we want to test, for example our customer support number.</li>
+  <li><b>Local IP Address</b>: This should be the internal IP of the host running the script.</li>
+</ul>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- blog1 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4540802364968823"
+     data-ad-slot="6142121850"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+<p>
+The script runs SIPp by specifying the following arguments:
+</p>
+<ul>
+  <li><b>-aa</b>: Replies with 200 to INFO, UPDATE and NOTIFY messages (so we don't fail the test for these unexpected messages).</li>
+  <li><b>-d 30</b>: Set duration of pauses to 30secs by default.</li>
+  <li><b>-r 1</b>: Set the call rate to 1 call per second (we are not going to do more than 1 call ever, actually).</li>
+  <li><b>-rp 1s</b>: Period duration, 1 sec. This means that option <b>-r</b> will do N calls per this period length.</li>
+  <li><b>-sf ${scenario}</b>: Sets scenario file.</li>
+  <li><b>-l 1</b>: Limit to 1 simultaneous call at most.</li>
+  <li><b>-m 1</b>:Quit SIPp once this many number of calls have been processed, either with success or error.</li>
+  <li><b>-trace_err</b>: Save unexpected messages to a file, useful for tracing.</li>
+  <li><b>-i ${my_ip}</b>: Sets the local IP address.</li>
+  <li><b>-rtp_echo</b>: Echo back all the audio we get once the call is answerwed.</li>
+  <li><b>-set from ${from}</b>: Sets the global variable <b>from</b> that will be used in the scenario file.</li>
+  <li><b>-set to ${to}</b>: Sets the global variable <b>to</b> that will be used in the scenario file.</li>
+</ul>
+<p>
+After SIPp runs it will set an <a href="http://tldp.org/LDP/abs/html/exit-status.html">exit status code</a> of 0 on success (all calls finished ok) and non-zero on errors,
+and that's how we can check it in our script and take an action accordingly (like sending an email on errors).
+</p>
+<h3>Complete SIPp scenario</h3>
+<p>
+Now this is where all the fun things happen, our XML scenario file for SIPp.
+</p>
+<script src="https://gist.github.com/marcelog/b4b8f84ce985d8561c1039f87a8df767.js"></script>
+<p>
+This will essentially:
+</p>
+<ul>
+  <li>Send a <a href="https://tools.ietf.org/html/rfc3261#section-13.2.1">SIP INVITE</a> to the VoIP Gateway to establish a call
+    to our public telephone number (or DID) by using a predefined caller id. In this case we also specify <a href="https://en.wikipedia.org/wiki/G.729">G729 as our desired codec</a>, and
+    there's a chance that you will need to adjust this.</il>
+  <li>Expect a <a href="https://en.wikipedia.org/wiki/List_of_SIP_response_codes#2xx.E2.80.94Successful_Responses">SIP OK message (200)</a> (and save the contents of the <a href="https://tools.ietf.org/html/rfc3261#page-175">Record-Route</a> headers if any, <b>rrs</b> argument of the <b>recv</b> command).</li>
+  <li>Optionally expect the <a href="https://en.wikipedia.org/wiki/List_of_SIP_response_codes#1xx.E2.80.94Provisional_Responses">Provisional Response Messages: 100, 183, and 180</a>. It will specifically fail the
+    test on <a href="https://en.wikipedia.org/wiki/List_of_SIP_response_codes#6xx.E2.80.94Global_Failure_Responses">the 603 Rejected message</a> (this one is used a lot by VoIP providers for example
+    when issuing calls from an unauthorized IP address).</li>
+  <li>When the 200 is received, it will <a href="https://tools.ietf.org/html/rfc3261#page-129">Send a SIP 200 ACK for it</a> and honor the recorded routes and the contents of the <a href="https://tools.ietf.org/html/rfc3261#page-40"><b>Contact</b> header</a> by using <b>next_url</b>.</li>
+  <li>At this point the call is established, so we pause for 5 seconds. This is useful for example if we have an <a href="https://en.wikipedia.org/wiki/Automated_attendant">Automated Attendant</a> that will for example play
+    a menu for the user, so waiting 5 seconds seems reasonable to simulate a user listening to the menu.</li>
+  <li>After the pause the call is hanged up by sending the <a href="https://tools.ietf.org/html/rfc3261#page-90">BYE Method</a> and expecting a 200 in response.</li>
+</ul>
+<h3>An awesome tool to check that your PBX and SIP trunks are available, running, and taking inbound calls</h3>
+<p>
+Now you can set this up in a crontab and send emails when you detect that the calls are failing, giving you a heads up early, without
+waiting for the customer to notice. No more lost calls due to PBXs being offline :) Enjoy!
+</p>
+              </div>
+            </div>
+            <div class="mod view-more">
+              <div class="inner">
+                <a href="articles.html">Read Other Articles</a>
+              </div>
+              <span class="bottom"><span class="bl"></span><span class="br"></span></span>
+            </div>
+          </div>
+          <div id="sidebar" class="highlight articles-style original">
+            <div class="mod simple">
+              <span class="top"><span class="tl"></span><span class="tr"></span></span>
+              <div class="inner set-height-1">
+<p>
+If you liked this or other articles (and feel generous), you can make a donation:
+</p>
+<p>
+<a href='https://pledgie.com/campaigns/30947'><img alt='Click here to lend your support to: General and make a donation at pledgie.com !' src='https://pledgie.com/campaigns/30947.png?skin_name=chrome' border='0' ></a>
+</p>
+                <div class="google-ads">
+                    <script type="text/javascript">
+                    google_ad_client = "ca-pub-4540802364968823";
+                    /* 9 */
+                    google_ad_slot = "8617829895";
+                    google_ad_width = 250;
+                    google_ad_height = 250;
+                    //-->
+                    </script>
+                    <script type="text/javascript"
+                    src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+                    </script>
+                </div>
+                <h2>Related Articles</h2>
+                <div class="hr-1"><hr /></div>
+                <ul class="quick-list">
+                  <li><a href="haproxy_validate_ssl_client_certificates_in_application.html">Validate client SSL certificates in your application with HaProxy</a></li>
+                  <li><a href="haproxy_acl_backend_ssl_sni.html">Setup multiple backends in HaProxy with ACL, one SSL certificate, and SNI</a></li>
+                  <li><a href="android_emulator_linux_virtual_webcam_video_device.html">Virtual webcam as phone camera in Android Emulator in Linux</a></li>
+                  <li><a href="android_emulator_black_screen_vnc_gpu_mesa_sdl.html">Android Emulator in Linux with VNC and without GPU support</a></li>
+                  <li><a href="android_emulator_32bit_error_in_64bit_system.html">Solution for "ERROR: 32-bit Linux Android emulator binaries are DEPRECATED"</a></li>
+                  <li><a href="android_emulator_daemontools.html">Running the Android Emulator as System Services with Daemontools</a></li>
+                  <li><a href="aws_cloudwatch_monitor_lambda_alerts.html">Using CloudWatch to Monitor your AWS Lambda and send Alerts on Errors</a></li>
+                  <li><a href="aws_lambda_check_website_http_online.html">Using AWS Lambda to check if your website is online</a></li>
+                  <li><a href="mysql_events_expiring_sessions.html">Expirable user sessions with MySQL events</a></li>
+                  <li><a href="fop2_set_dnd_status_asterisk_db_event_reload.html">Setting DND (Do Not Disturb) in FOP2 Programmatically</a></li>
+                  <li><a href="pagi_mock_client_unit_test_ivr_application_telephony_asterisk_agi.html">Unit test your PHP IVR applications with PAGI</a></li>
+                  <li><a href="pagi_node_call_flow_easy_telephony_application_for_asterisk_php.html">Advanced telephony applications with PHP and PAGI using call flow nodes</a></li>
+                  <li><a href="php_asterisk_agi_protocol_tutorial.html">AGI (Asterisk Gateway Interface) Protocol Tutorial And Quick Practical Approach</a></li>
+                  <li><a href="php_asterisk_manager_interface_protocol_tutorial_introduction.html">AMI (Asterisk Manager Interface) Protocol Tutorial</a></li>
+                  <li><a href="php_asterisk_listener_example_using_pami_and_ding.html">Making an Asterisk Manager Interface monitor using PHP, PAMI, and Ding (Inversion of control and dependency injection in your php telephony applications)</a></li>
+                  <li><a href="bash_asterisk_manager_interface_client_shell_script.html">Bami: A Proof of concept asterisk manager interface (AMI) client written in bash</a></li>
+                  <li><a href="pami_introduction_tutorial_how_to_install.html">Getting Started with the PAMI: PHP Asterisk Manager Interface</a></li>
+                  <li><a href="pagi_tutorial_create_voip_telephony_application_for_asterisk_with_agi_and_php.html">PAGI: Quick telephony applications using AGI and PHP</a></li>
+                </ul>
+              </div>
+              <span class="bottom"><span class="bl"></span><span class="br"></span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="footer">
+    <!-- <p>&copy; 2010 Marcelo G. All Rights Reserved. Website design by <a href="http://Digitallabs.tv" target="_blank">Digitallabs.tv</a></p> -->
+    <address>Email: <a href="mailto:marcelog@gmail.com">marcelog@gmail.com</a></address>
+  </div>
+</div>
+
+<!-- config SyntaxHighlighter -->
+<script src='../dphighlighter/shCore.js' type='text/javascript'></script>
+<script src='../dphighlighter/shBrushPhp.js' type='text/javascript'></script>
+<script src='../dphighlighter/shBrushXml.js' type='text/javascript'></script>
+<script src='../dphighlighter/shBrushJScript.js' type='text/javascript'></script>
+<script src='../dphighlighter/shBrushCss.js' type='text/javascript'></script>
+<script language="javascript">
+    dp.SyntaxHighlighter.ClipboardSwf = '../dphighlighter/clipboard.swf';
+    dp.SyntaxHighlighter.HighlightAll('code');
+</script>
+  <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-21070993-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body>
+</html>

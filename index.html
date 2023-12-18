@@ -1,65 +1,280 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google-adsense-account" content="ca-pub-4540802364968823">
-    <meta name="description" content="Sombo20 - Portfólio">
-    <title>Sombo20</title>
-    <link rel="stylesheet" href="styles.css">
-   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4540802364968823"
-     crossorigin="anonymous"></script>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-4540802364968823",
+          enable_page_level_ads: true
+     });
+</script>
+<title>Marcelo Gornstein Homepage</title>
+<meta name="Author" content="Marcelo Gornstein"/>
+<meta name="Keywords" content="Marcelo Gornstein software articles php github ding pami pagi asterisk voip telephony freebsd linux dime soap agi ami manager protocol dependency injection inversion of control tcp server client helper aspect oriented programming beans xml yaml annotations"/>
+<meta name="Description" content="Marcelo Gornstein software articles php github ding pami pagi asterisk voip telephony freebsd linux dime soap agi ami manager protocol dependency injection inversion of control tcp server client helper aspect oriented programming beans xml yaml annotations"/>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" href="images/favicon.ico" title="favicon" />
+<link rel="stylesheet" href="css/main.css" type="text/css" media="all" />
+<!--[if IE]>
+<link type="text/css" rel="stylesheet" media="screen" href="css/fix-ie.css" />
+<![endif]-->
+<!--[if IE 6]>
+<script type="text/javascript" src="js/fix-png.js"></script>
+<![endif]-->
+<script type="text/javascript" src="js/lib/jquery-core.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
 </head>
 <body>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4540802364968823"
-     crossorigin="anonymous"></script>
-<!-- awlo -->
+<div id="wrapper">
+  <div id="top">
+    <!-- <a class="logo" href="index.html">Marcelo G</a> -->
+    <ul id="nav">
+      <li class="active"><a href="index.html"><span>Home</span></a></li>
+      <!-- <li><a href="about.html"><span>About</span></a></li> -->
+      <li><a href="articles/articles.html"><span>Articles</span></a></li>
+      <li><a href="software.html"><span>Software</span></a></li>
+      <li><a href="mailto:marcelog@gmail.com"><span>Contact</span></a></li>
+    </ul>
+  </div>
+  <div class="header-extra">
+  	<h1>Welcome</h1>
+  	<p>What you will find here:<br/>
+    C/C++, Erlang, Elixir, PHP, FreeBSD, Linux, Miscelaneous programming stuff and articles, Design Patterns, etc
+    </p>
+    <a href="mailto:marcelog@gmail.com" class="button">Get in Touch</a>
+  </div>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- blog2 -->
 <ins class="adsbygoogle"
      style="display:block"
      data-ad-client="ca-pub-4540802364968823"
-     data-ad-slot="5227402218"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
+     data-ad-slot="2769853059"
+     data-ad-format="auto"></ins>
 <script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
+(adsbygoogle = window.adsbygoogle || []).push({});
 </script>
-    <header>
-        <h1>Sombo20</h1>
-        <p>Portfólio de Projetos</p>
-    </header>
+  <div class="main-outer">
+  	<div class="main-inner">
+    	<div class="main">
+      	<div class="line">
+        	<div class="highlight articles-style">
+            <div class="mod simple">
+              <span class="top"><span class="tl"></span><span class="tr"></span></span>
+              <div class="inner set-height-1">
+                <h2>Articles</h2>
+                <div class="hr-1"><hr /></div>
+                <h3>ABNF Grammars in Elixir</h3>
+<p><a href="https://en.wikipedia.org/wiki/Augmented_Backus%E2%80%93Naur_Form"><b>ABNF grammars</b></a> are widely used in the Internet today.
+They serve as the basic building blocks for a lot of highly used protocols, like <a href="https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol"><b>HTTP</b></a>,
+<a href="https://en.wikipedia.org/wiki/Session_Initiation_Protocol"><b>SIP</b></a>, <a href="https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol"><b>SMTP</b></a>,
+<a href="https://en.wikipedia.org/wiki/File_Transfer_Protocol"><b>FTP</b></a>, etc. And they are also very useful to design <a href="https://en.wikipedia.org/wiki/Domain-specific_language">DSLs</a>
+(Domain Specific Language).
+In this article we'll learn how to use a tool called <a href="https://github.com/marcelog/ex_abnf"><b>ex_abnf</b></a> to quickly
+<b>create grammar parsers using the <a href="http://elixir-lang.org">Elixir</a> language.</b>
+ &nbsp;<a href="articles/abnf_grammars_in_elixir.html"><strong>Read More &raquo;</strong></a></p>
+                <h3>Persisting your entities in Erlang</h3>
+<p>In this article, I'll describe <a href="https://github.com/marcelog/epers/">epers</a>, which is a
+small project I've been working on. It's currently a "small" project, but quite ambitious, and the idea
+is to try some "new" ideas and concepts in the erlang we do every day. epers stands for "<b>erlang persistence</b>". As the name suggests, it tries to make it easy to use databases in erlang programs, to make it a little more agile, and (humbly) offer a nice adapter for several databases, hiding their
+implementation details &nbsp;<a href="articles/erlang_persistence_entities.html"><strong>Read More &raquo;</strong></a></p>
+                <div class="hr-2"><hr /></div>
+                <h3>Erlang Websocket Server using Cowboy</h3>
+<p>Out of curiosity, and because some of my own projects needed it, I decided to go ahead and try writing a <a href="http://www.websocket.org/">websocket</a>
+server in erlang. After evaluating some of the available options (so I dont have to implement the whole websocket RFC
+-and their different drafts/versions- myself), I chose the Cowboy &nbsp;<a href="articles/erlang_websocket_server_cowboy_tutorial.html"><strong>Read More &raquo;</strong></a></p>
+                <div class="hr-2"><hr /></div>
+                <h3>Sniffing in PHP using libpcap: Thank you SWIG!</h3>
+<p>I've been wanting to try <a href="http://www.swig.org/">SWIG</a> for a long time, but never got the chance, for one
+thing or the other. So this weekend I've finally decided to give it a try by trying to create a php extension
+that access a small C++ wrapper for libpcap, so I can sniff packets directly from PHP. Just for fun (and actually because
+I couldn't find any active pecl extension to use libpcap, so it might as well be something useful). I've named it "SimplePcap". &nbsp;<a href="articles/swig_php_libpcap_module_c++.html"><strong>Read More &raquo;</strong></a></p>
+                <div class="hr-2"><hr /></div>
+                <h3>PHP Continuous integration, with Jenkins and Phing</h3>
+<p>This article is about how to use <a href="http://www.phing.info/trac/">Phing</a> in your projects, so a <a href="http://en.wikipedia.org/wiki/Continuous_integration">continuous integration server</a> (in this case <a href="http://jenkins-ci.org/">Jenkins</a> -ex Hudson-) can generate
+the necessary artifacts for your php application (deployment artifacts, documentation, code metrics, etc). I'll try to show why this will make your life easier when
+developing or auditing code, generating releases and deploying new versions, trace bugs, etc. &nbsp;<a href="articles/ci_jenkins_hudson_continuous_integration_php_phing.html"><strong>Read More &raquo;</strong></a></p>
+                <div class="hr-2"><hr /></div>
+                <h3>How to make a cross compiler (gcc) for freebsd under linux. A small tutorial.</h3>
+                <p>I manage a Hudson CI Server that runs on a linux system where I work, and one of our projects is written in plain C code that should be able to run on linux and also freebsd 7. Up to now we were using a freebsd (hudson) slave node in order to build the freebsd binaries. &nbsp;<a href="articles/cross_freebsd_compiler_in_linux.html"><strong>Read More &raquo;</strong></a></p>
+                <div class="hr-2"><hr /></div>
+                <h3>Erlang Special Processes without behaviours</h3>
+                <p>OTP has (in its <a href="http://www.erlang.org/doc/design_principles/des_princ.html">design principles</a>), things like <a href="http://learnyousomeerlang.com/what-is-otp#the-common-process-abstracted">behaviours</a>, <a href="http://www.erlang.org/doc/design_principles/applications.html" >applications</a>,
+<a href="http://www.erlang.org/doc/design_principles/release_structure.html">releases</a>, and <a href="http://www.erlang.org/doc/design_principles/sup_princ.html" >supervision trees</a>.
+If we zoom into the latter, we'll find <a href="http://www.erlang.org/doc/man/supervisor.html">supervisors</a>, which supervise <a href="http://www.erlang.org/doc/reference_manual/processes.html">processes</a>, that can also
+be supervisors themselves. &nbsp;<a href="articles/erlang_special_processes_tutorial_handling_system_messages.html"><strong>Read More &raquo;</strong></a></p>
+                <div class="hr-2"><hr /></div>
+                <h3>Making an Asterisk Manager Interface monitor using PHP, PAMI, and Ding (Inversion of control and dependency injection in your php telephony applications)</h3>
+                <p>Here, I'll write about AsterTrace (<a href="https://github.com/marcelog/AsterTrace">https://github.com/marcelog/AsterTrace</a>), a
+simple project that will help you get started using the asterisk manager interface. &nbsp;<a href="articles/php_asterisk_listener_example_using_pami_and_ding.html"><strong>Read More &raquo;</strong></a></p>
+                <div class="hr-2"><hr /></div>
+                <h3>Mocking global php functions for unit testing</h3>
+                <p>Let&acute;s say you&acute;d like to achieve a 100% coverage of your code in your php application (you obsessive geek..). It&acute;s almost certain you&acute;ll need to start mock&acute;ing things around. So far so good.. but sooner or later you will need to deal with the test cases for the code that use global php functions. How can you mock them?  &nbsp;<a href="articles/php_mock_global_functions_for_unit_tests_with_phpunit.html"><strong>Read More &raquo;</strong></a></p>
+                <div class="hr-2"><hr /></div>
+                <h3>Bami: A Proof of concept asterisk manager interface (AMI) client written in bash</h3>
+                <p>In <a href="php_asterisk_manager_interface_protocol_tutorial_introduction.html">this article</a> I explained the inners of the AMI protocol, and talked about actions, events, and responses. As a complement of that article I wrote (just for fun) a little shell script &nbsp;<a href="bash_asterisk_manager_interface_client_shell_script.html"><strong>Read More &raquo;</strong></a></p>
+                <div class="hr-2"><hr /></div>
+                <!--
+                <h3>How to setup nginx to work with FastCGI and PHP 5.2 and PHP 5.3</h3>
+                <p><a href="http://nginx.org/">Nginx</a> seems to be the new silver bullet nowadays, so I've decided
+to give it a try. Of course it is fun to get it up and running and serve static content &nbsp;<a href="articles/configure_nginx_php_5.3_5.2_fastcgi.html"><strong>Read More &raquo;</strong></a></p>
+ -->
+              </div>
+            </div>
+            <div class="mod view-more">
+              <div class="inner">
+                <a href="articles/articles.html">Read all Articles</a>
+              </div>
+              <span class="bottom"><span class="bl"></span><span class="br"></span></span>
+            </div>
+          </div>
 
-    <section id="about">
-        <h2>Sobre Mim</h2>
-        <p>Olá! Sou Sombo20, um desenvolvedor web apaixonado por criar soluções incríveis.</p>
-        <p>Aproveite e utilize esse app gratis.</p>
-    </section>
+          <div class="highlight software-style">
+            <div class="mod simple">
+              <span class="top"><span class="tl"></span><span class="tr"></span></span>
+              <div class="inner set-height-1">
+                <h2>Software</h2>
+                <div class="hr-1"><hr /></div>
+                <h3>Ding</h3>
+                <p>PHP DI (Dependency Injection), AOP (Aspect Oriented Programming), JSR 250/330 annotations, xml and YAML for bean definitions, lightweight, MVC (Model View Controller), syslog, tcp client and server, with non blocking sockets, and custom error, signal, and exception handling. Similar to Spring (java)</p>
+                <div class="line">
+                	<a href="Ding/index.html" class="view-more-link"><strong>View More</strong></a>
+                </div>
+                <div class="hr-2"><hr /></div>
+                <h3>Erlagi</h3>
+                <p>An AGI (Asterisk Gateway Interface) client implementation in Erlang, suitable to make telephony applications using erlang.</p>
+                <div class="line">
+                    <a href="https://github.com/marcelog/erlagi" class="view-more-link"><strong>View More</strong></a>
+                </div>
+                <div class="hr-2"><hr /></div>
+                <h3>SimplePcap</h3>
+                <p>A small C++ wrapper for libpcap, shipped with a SWIG interface file for PHP. Allows packet capture and injection directly from PHP code. Comes with a sample PHP sniffer as an example.</p>
+                <div class="line">
+                    <a href="http://marcelog.github.com/articles/swig_php_libpcap_module_c++.html" class="view-more-link"><strong>View More</strong></a>
+                </div>
+                <div class="hr-2"><hr /></div>
+                <h3>Erlami</h3>
+                <p>An AMI (Asterisk Manager Interface) client implementation in Erlang.</p>
+                <div class="line">
+                    <a href="https://github.com/marcelog/erlami" class="view-more-link"><strong>View More</strong></a>
+                </div>
+                <div class="hr-2"><hr /></div>
+                <h3>PAMI</h3>
+                <p>PHP Asterisk Manager Interface (AMI) supports synchronous command (action)/ responses and asynchronous events using the pattern observer-listener. Supports commands with responses with multiple events. Also supports SMS via VGMS boards. Very suitable for development of operator consoles and / or asterisk / channels / peers monitoring through SOA, etc</p>
+                <div class="line">
+                	<a href="PAMI/index.html" class="view-more-link"><strong>View More</strong></a>
+                </div>
+                <div class="hr-2"><hr /></div>
+                <h3>PAGI</h3>
+                <p>PHP AGI (Asterisk Gateway Interface) facade, with CDR (Call Detail Record), Call spool and schedule auto dial, Send and Receive Fax, Channel Variables,  and Caller ID management</p>
+                <div class="line">
+                	<a href="PAGI/index.html" class="view-more-link"><strong>View More</strong></a>
+                </div>
+                <div class="hr-2"><hr /></div>
+                <h3>NAMI</h3>
+                <p>Node Asterisk Manager Interface (AMI) A port of PAMI in JavaScript to run with node.</p>
+                <div class="line">
+                    <a href="Nami/index.html" class="view-more-link"><strong>View More</strong></a>
+                </div>
+                <div class="hr-2"><hr /></div>
+                <h3>MDM</h3>
+                <p>Multithreaded daemon and libraries written in
+  plain ansi C, for linux and freebsd, used to communicate with DSLAM Alcatel, ZTE, HUAWEI</p>
+                <div class="line">
+                    <a href="https://github.com/marcelog/MDM" class="view-more-link"><strong>View More</strong></a>
+                </div>
+                <div class="hr-2"><hr /></div>
+                <h3>AnoForPHP</h3>
+                <p>Patch for ZendEngine/PHP (5.3.5) to allow native annotations in the
+  language by using the token "@@" (the @ was already taken). It allows 0 or more annotations in classes, methods, properties, and
+  arguments for methods with 0 or more arguments per annotation</p>
+                <div class="line">
+                    <a href="https://github.com/marcelog/AnoForPHP" class="view-more-link"><strong>View More</strong></a>
+                </div>
+              </div>
+            </div>
+            <div class="mod view-more">
+              <div class="inner">
+                <a href="software.html">View all Software</a>
+              </div>
+              <span class="bottom"><span class="bl"></span><span class="br"></span></span>
+            </div>
+          </div>
 
-    <section id="projects">
-        <div class="container">
-			<h1>Conversor Digital</h1>
-			<form id="form" class="form" action="#">
-				<div class="element">
-					<div class="decimal">
-						<label>Decimal</label>
-						<input type="text" placeholder="Decimal" id="dec" onclick="this.value=''" onkeyup="binCalc(this.form.bin)">
-					</div>
-					<div class="binario">
-						<label>Binário</label>
-						<input type="text" placeholder="Binário"  onclick="this.value=''" onkeyup="decCalc(this.form.dec);minmax=(value,0,65536)" id="bin"> 
-					</div>
-					<div class="hexadecimal">
-						<label>Hexadecimal</label>
-						<input type="text" placeholder="Hexadecimal"  id="hex" disabled="disabled" >
-					</div>
-				</div>
-			</form>
-		</div>
-    </section>
+          <div class="highlight welcome-style original">
+            <div class="mod simple">
+              <span class="top"><span class="tl"></span><span class="tr"></span></span>
+              <div class="inner">
+                <h2>About</h2>
+                <div class="hr-1"><hr /></div>
+                <p>Hello there. <p>I hope you enjoy whatever thing you can
+  find here. </p><p>Please contact me if you have any kind of comments or feedback that can
+  contribute anything at all.</p>
+  <p>
+<a href="http://pear.marcelog.name/">PEAR Channel</a><br/>
+<a href="http://ci.marcelog.name/">CI (Jenkins) Server</a><br/>
+<a href="http://careers.stackoverflow.com/marcelog">Resumé at careers 2.0</a><br/>
+<a href="http://stackoverflow.com/users/727142/marcelog">User at StackOverflow</a><br/>
+<a href="http://www.linkedin.com/pub/marcelo-gornstein/6/757/735">LinkedIn Profile</a><br/>
+<a href="http://freshmeat.net/users/gornsteinm">Freshmeat Profile</a><br/>
+<a href="https://www.ohloh.net/accounts/marcelog/projects">Ohloh Profile</a><br/>
+Twitter: @mgornstein<br/>
+</p>
+<p>
+If you feel generous, you can make a donation and help me dedicate more time to write useful articles and software:
+</p>
+<p>
+<a href='https://pledgie.com/campaigns/30947'><img alt='Click here to lend your support to: General and make a donation at pledgie.com !' src='https://pledgie.com/campaigns/30947.png?skin_name=chrome' border='0' ></a>
+</p>
+                <div class="google-ads">
+                    <script type="text/javascript">
+                    google_ad_client = "ca-pub-4540802364968823";
+                    /* 9 */
+                    google_ad_slot = "8617829895";
+                    google_ad_width = 250;
+                    google_ad_height = 250;
+                    //-->
+                    </script>
+                    <script type="text/javascript"
+                    src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+                    </script>
+                </div>
+              </div>
+              <span class="bottom"><span class="bl"></span><span class="br"></span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="footer">
+    <!-- <p>&copy; 2010 Marcelo G. All Rights Reserved. Website design by <a href="http://Digitallabs.tv" target="_blank">Digitallabs.tv</a></p> -->
+    <address>Email: <a href="mailto:marcelog@gmail.com">marcelog@gmail.com</a></address>
+  </div>
+</div>
 
-    <footer>
-        <p>&copy; 2023 Sombo20 - Todos os direitos reservados.</p>
-    </footer>
-    
-	<script src="index.js"></script>
+<!-- config SyntaxHighlighter -->
+<script src='../dphighlighter/shCore.js' type='text/javascript'></script>
+<script src='../dphighlighter/shBrushPhp.js' type='text/javascript'></script>
+<script src='../dphighlighter/shBrushXml.js' type='text/javascript'></script>
+<script src='../dphighlighter/shBrushJScript.js' type='text/javascript'></script>
+<script src='../dphighlighter/shBrushCss.js' type='text/javascript'></script>
+<script language="javascript">
+    dp.SyntaxHighlighter.ClipboardSwf = '../dphighlighter/clipboard.swf';
+    dp.SyntaxHighlighter.HighlightAll('code');
+</script>
+  <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-21070993-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
 </body>
 </html>
+

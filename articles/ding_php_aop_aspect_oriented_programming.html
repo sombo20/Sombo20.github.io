@@ -1,0 +1,269 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-4540802364968823",
+          enable_page_level_ads: true
+     });
+</script>
+<title>Aspect Oriented Programming in PHP with Ding</title>
+<meta name="Author" content="Marcelo Gornstein"/>
+<meta name="Keywords" content="php aop aspect oriented programming bean ding xml yaml annotation example tutorial"/>
+<meta name="description" content="This article is about how we can use aop in php using the ding container"/>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" href="../images/favicon.ico" title="favicon" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="all" />
+<link href='../dphighlighter/SyntaxHighlighter.css' rel='stylesheet' type='text/css' />
+<!--[if IE]>
+<link type="text/css" rel="stylesheet" media="screen" href="../css/fix-ie.css" />
+<![endif]-->
+<!--[if IE 6]>
+<script type="text/javascript" src="../js/fix-png.js"></script>
+<![endif]-->
+<script type="text/javascript" src="http://apis.google.com/js/plusone.js"></script>
+<script type="text/javascript" src="../js/lib/jquery-core.js"></script>
+<script type="text/javascript" src="../js/main.js"></script>
+</head>
+<body>
+<div id="wrapper">
+  <div id="top">
+    <!-- <a class="logo" href="index.html">Marcelo G</a>-->
+    <ul id="nav">
+      <li><a href="../index.html"><span>Home</span></a></li>
+      <li class="active"><a href="articles.html"><span>Articles</span></a></li>
+      <li><a href="../software.html"><span>Software</span></a></li>
+      <li><a href="mailto:marcelog@gmail.com"><span>Contact</span></a></li>
+    </ul>
+  </div>
+  <div class="header">
+  	<div class="line">
+      <h1>Articles</h1>
+      <div class="social-network">
+       <a href="mailto:marcelog@gmail.com" class="icon-email" title="Email">Email</a>
+       <g:plusone></g:plusone>
+      </div>
+   	</div>
+    <div class="breadcrumb">You are here &nbsp;&raquo;&nbsp; <a href="../index.html">Home Page</a>  &nbsp;&raquo;&nbsp;  <a href="articles.html">Articles</a>  &nbsp;&raquo;&nbsp;  Aspect Oriented Programming in PHP with Ding</div>
+  </div>
+  <div class="main-outer">
+  	<div class="main-inner">
+    	<div class="main">
+      	<div class="line">
+          <div id="content">
+            <div class="mod simple article-detail-style">
+              <span class="top"><span class="tl"></span><span class="tr"></span></span>
+              <div class="inner set-height-1">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- blog2 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4540802364968823"
+     data-ad-slot="2769853059"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+                <h2>Aspect Oriented Programming in PHP with Ding</h2>
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="mgornstein" data-size="large" data-related="mgornstein">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                <div class="hr-1"><hr /></div>
+<H3><u>What is Aspect Oriented Programming and how we can do it in PHP</u></H3>
+<p>
+<a href="http://en.wikipedia.org/wiki/Aspect-oriented_programming">Aspect Oriented Programming</a> (just AOP from now on),
+is a very powerful tool we can use to implement the infamous <a href="http://en.wikipedia.org/wiki/Cross-cutting_concern">cross cutting
+concerns</a> we have in our applications (auditing, logging, security, etc). In this article, I'll show how we can easily use AOP in a very simple language like PHP, by using
+the <a href="http://marcelog.github.com/Ding/">Ding container</a>.
+</p>
+<h3>Useful links</h3>
+<ul>
+<li>Complete source code for this article at <a href="https://github.com/marcelog/Ding-Aop-Example">GitHub</a>.</li>
+<li><a href="http://marcelog.github.com/Ding/manual/toc.html#aop">AOP Section</a> of the ding manual.</li>
+</ul>
+<h3>How AOP works in PHP by using the Ding DI container</h3>
+<p>
+Ding uses 2 patterns to achieve AOP in PHP:
+</p>
+<ul>
+<li><a href="http://en.wikipedia.org/wiki/Interceptor_pattern">Interceptor Pattern</a></li>
+<li><a href="http://en.wikipedia.org/wiki/Proxy_pattern">Proxy Pattern</a></li>
+</ul>
+<p>
+The interceptor pattern is used to provide 2 kind of interceptions for methods: one to allow code
+to be executed before (and after) an intercepted method, and another one that only gets executed when
+the intercepted method throws an uncatched exception. Thus, when defining aspects and pointcuts, you will
+have to decide which one of them you will use. The general rule:
+</p>
+<ul>
+<li>Method Interceptors: Use them when you want your code to be run before (and after) the interesting method.</li>
+<li>Exception Interceptors: Only useful if you want to catch unhandled exceptions. Your code will be called only when
+the method throws an exception.</li>
+</ul>
+<p>
+When you call a method that is not intercepted, the call is just executed by PHP directly, nothing special
+there. But when calling a method of a bean that has 1 or more aspects applied to it, you are in fact calling
+a proxy method that will call a dispatcher. The dispatcher will call all the aspects in order, if all these aspects
+proceed with the call, the last method in this chain will be the original intercepted method.
+</p>
+<p>
+The <a href="http://ci.marcelog.name:8080/job/Ding/javadoc/db_Aspect_Interceptor_IDispatcher.html#%5CDing%5CAspect%5CInterceptor%5CIDispatcher">IDispatcher</a> interface and the
+<a href="http://ci.marcelog.name:8080/job/Ding/javadoc/db_Aspect_Interceptor_DispatcherImpl.html#%5CDing%5CAspect%5CInterceptor%5CDispatcherImpl">DispatcherImpl</a> implementation
+take care of handling and dispatching the chained calls to advices and original methods. This is automatically done by the container
+when it finds that a bean (or some beans) have any aspects associated with them.
+</p>
+<p>
+Each method call generates a <a href="http://ci.marcelog.name:8080/job/Ding/javadoc/db_Aspect_MethodInvocation.html#%5CDing%5CAspect%5CMethodInvocation">MethodInvocation</a> object. This
+is the only argument that advices receive. Thus, your interceptor code, would look like (the names are
+just for illustrative purposes):
+</p>
+<script src="https://gist.github.com/marcelog/47fbb9a5f40923117b98125e66ddf4e8.js"></script>
+<p>
+And that is pretty much you need to add AOP to your projects :)
+</p>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- blog1 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4540802364968823"
+     data-ad-slot="6142121850"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+<h3>How to apply the Proxy pattern in PHP to achieve AOP</h3>
+<p>
+In environments like the JVM, <a href="http://www.eclipse.org/aspectj/">AspectJ</a> manipulates the bytecode
+at runtime to achieve doing lots of cool things. In PHP we cant do that (or at least, I cant do that.. ). So
+we need to create a proxy, that will call the dispatcher instead of the original implementation.
+</p>
+<p>Unfortunately, we cant create proxies by using the native reflection api provided with PHP,
+so we only have one option: generate php code that will actually be a proxy class for the class of the bean where we want to apply
+our aspects. This is also done automatically by the container, by using the
+<a href="http://ci.marcelog.name:8080/job/Ding/javadoc/db_Aspect_Proxy.html#%5CDing%5CAspect%5CProxy">Proxy</a> class.
+</p>
+<p>
+So for each bean that has aspects applied, ding generates the necessary proxies. These proxies can (and should) be
+cached. See the <a href="http://marcelog.github.com/Ding/manual/toc.html#config">configuration section of the container</a> in the
+ding manual to see how.
+</p>
+<h3>Defining Aspects and Pointcuts in your PHP Code</h3>
+<p>
+When defining an <a href="http://ci.marcelog.name:8080/job/Ding/javadoc/db_Aspect_AspectDefinition.html#%5CDing%5CAspect%5CAspectDefinition">Aspect</a>, you will need:
+</p>
+<ul>
+<li>A bean, where the advice code is. Effectively, the code you want to be run and intercept the target methods with.</li>
+<li>Type of interception: method or exception.</li>
+<li>A <a href="http://php.net/pcre">PCRE</a> expression used to specify class names. All beans that match this class will have the aspects applied. This is kind of a "global"
+aspect definition, because it will trap all classes of a given name.</li>
+<li>You can avoid having the PCRE expression and declare the aspect right there inside the bean definition(s) you're interested in (vs. global aspects, that
+will apply to more beans if the class names matches).</li>
+</ul>
+<p>
+When defining a <a href="http://ci.marcelog.name:8080/job/Ding/javadoc/db_Aspect_PointcutDefinition.html#%5CDing%5CAspect%5CPointcutDefinition">Pointcut</a>, you will need to specify:
+</p>
+<ul>
+<li>A PCRE expression that will be used to match method names.</li>
+<li>The name of the method to invoke when this pointcut matches.</li>
+</ul>
+<p>
+You can then associate pointcuts to aspects in the configuration files (if using xml or yaml). You can reuse
+aspect definitions and pointcut definitions as well.
+</p>
+<H3>Where to find examples of doing PHP Aspect Oriented Programming with XML, YAML, and Annotations</H3>
+<p>
+In the <a href="https://github.com/marcelog/Ding-Aop-Example">github repository</a> for the source of this article, you can find an example with each one
+of the drivers,
+<a href="https://github.com/marcelog/Ding-Aop-Example/tree/master/xml">XML</a>,
+<a href="https://github.com/marcelog/Ding-Aop-Example/tree/master/yaml">YAML</a>,
+and <a href="https://github.com/marcelog/Ding-Aop-Example/tree/master/annotations">Annotations</a>.
+</p>
+<H3>So how about some AOP in PHP?</H3>
+<p>AOP is really great. Definitely not a silver bullet, but a tool that will just fit in certain
+ocassions.
+</p>
+              </div>
+            </div>
+            <div class="mod view-more">
+              <div class="inner">
+                <a href="articles.html">Read Other Articles</a>
+              </div>
+              <span class="bottom"><span class="bl"></span><span class="br"></span></span>
+            </div>
+          </div>
+          <div id="sidebar" class="highlight articles-style original">
+            <div class="mod simple">
+              <span class="top"><span class="tl"></span><span class="tr"></span></span>
+              <div class="inner set-height-1">
+<p>
+If you liked this or other articles (and feel generous), you can make a donation:
+</p>
+<p>
+<a href='https://pledgie.com/campaigns/30947'><img alt='Click here to lend your support to: General and make a donation at pledgie.com !' src='https://pledgie.com/campaigns/30947.png?skin_name=chrome' border='0' ></a>
+</p>
+                <div class="google-ads">
+                    <script type="text/javascript">
+                    google_ad_client = "ca-pub-4540802364968823";
+                    /* 9 */
+                    google_ad_slot = "8617829895";
+                    google_ad_width = 250;
+                    google_ad_height = 250;
+                    //-->
+                    </script>
+                    <script type="text/javascript"
+                    src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+                    </script>
+                </div>
+              	<h2>Related Articles</h2>
+                <div class="hr-1"><hr /></div>
+                <ul class="quick-list">
+                  <li><a href="ci_jenkins_hudson_continuous_integration_php_phing.html">PHP Continuous integration, with Jenkins and Phing</a></li>
+                  <li><a href="ding_component_bean_annotations.html">Ding bean annotations</a></li>
+                  <li><a href="ding_bean_lifecycle_init_destroy_post_construct.html">Hooks into the bean lifecycle in the Ding container</a></li>
+                  <li><a href="ding_component_bean_annotations_di_dependency_injection.html">Ding annotations for dependency injection</a></li>
+                  <li><a href="php_asterisk_listener_example_using_pami_and_ding.html">Making an Asterisk Manager Interface monitor using PHP, PAMI, and Ding (Inversion of control and dependency injection in your php telephony applications)</a></li>
+                  <li><a href="php_applications_with_doctrine2_orm_and_ding_di_container.html">Writing PHP applications with Doctrine2 as ORM and Ding as DI container</a></li>
+                  <li><a href="ding_how_to_install_configure_tutorial_introduction.html">Installing and using the Ding DI Container</a></li>
+                  <li><a href="ding_event_listen_dispatch_bean.html">Dispatching and listening for events in the Ding container</a></li>
+                  <li><a href="ding_example_xml_yaml_annotations_bean_drivers_tutorial_how_to.html">Ding container: Using the Xml, Yaml, and Annotations drivers</a></li>
+                  <li><a href="ding_xml_yaml_di_dependency_injection.html">Dependency injection with Xml and Yaml in the Ding container</a></li>
+                </ul>
+              </div>
+              <span class="bottom"><span class="bl"></span><span class="br"></span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="footer">
+  	<!-- <p>&copy; 2010 Marcelo G. All Rights Reserved. Website design by <a href="http://Digitallabs.tv" target="_blank">Digitallabs.tv</a></p> -->
+    <address>Email: <a href="mailto:marcelog@gmail.com">marcelog@gmail.com</a></address>
+  </div>
+</div>
+
+<!-- config SyntaxHighlighter -->
+<script src='../dphighlighter/shCore.js' type='text/javascript'></script>
+<script src='../dphighlighter/shBrushPhp.js' type='text/javascript'></script>
+<script src='../dphighlighter/shBrushXml.js' type='text/javascript'></script>
+<script src='../dphighlighter/shBrushJScript.js' type='text/javascript'></script>
+<script src='../dphighlighter/shBrushCss.js' type='text/javascript'></script>
+<script language="javascript">
+    dp.SyntaxHighlighter.ClipboardSwf = '../dphighlighter/clipboard.swf';
+    dp.SyntaxHighlighter.HighlightAll('code');
+</script>
+  <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-21070993-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body>
+</html>
